@@ -174,15 +174,16 @@ teams_2425.to_sql(name='team2425',con=db.engine, index=False, if_exists='replace
 
 
 con = sqlalchemy.create_engine(uri, encoding='utf8')
+
 ## removing the foreign key constraints after the tables already exist so that they can be dropped and replaced
 
 ## COMMENT THIS BACK IN AFTER FIRST RUN 
-#con.execute('alter table record drop constraint teamer')
-#con.execute('alter table record drop constraint player_connect')
+con.execute('alter table record drop constraint teamer')
+con.execute('alter table record drop constraint player_connect')
 
 ### saving tables from previous season - COMMENT THIS OUT AFTER FIRST RUN
-con.execute('create table a_player_2324 AS TABLE player')
-con.execute('create table a_record_2324 AS TABLE record')
+#con.execute('create table a_player_2324 AS TABLE player')
+#con.execute('create table a_record_2324 AS TABLE record')
 
 
 player_overview_df.to_sql(name='player', con=db.engine, index=False, if_exists='replace', dtype={
@@ -254,12 +255,12 @@ player_records_df.to_sql(name = 'record',con=db.engine, index=False,if_exists='r
 })
 
 con.execute('alter table player add primary key(id)')
+con.execute('alter table record add primary key(id)')
 
 
 ## Comment out after first run
-con.execute('alter table team2425 add primary key(id)')
+#con.execute('alter table team2425 add primary key(id)')
 
-con.execute('alter table record add primary key(id)')
 #Change the reference year here before the new season
 con.execute('alter table record add constraint teamer foreign key (opponent_team) references team2425(id)')
 con.execute('alter table record add constraint player_connect foreign key (element) references player(id)')
