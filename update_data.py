@@ -165,12 +165,12 @@ player_overview_df = pd.merge(player_overview_df,last_6_df,left_on='id', right_o
 player_overview_df = pd.merge(player_overview_df,last_10_df,left_on='id', right_on ='element_10')
 
 #COMMENT OUT AFTER FIRST RUN 
-teams_2425 = teams_df[['id','name']]
+'''teams_2425 = teams_df[['id','name']]
 
 teams_2425.to_sql(name='team2425',con=db.engine, index=False, if_exists='replace',dtype={
     'id': Integer,
     'name': Text
-})
+})'''
 
 
 con = sqlalchemy.create_engine(uri, encoding='utf8')
@@ -259,7 +259,7 @@ con.execute('alter table record add primary key(id)')
 
 
 ## Comment out after first run
-#con.execute('alter table team2425 add primary key(id)')
+con.execute('alter table team2425 add primary key(id)')
 
 #Change the reference year here before the new season
 con.execute('alter table record add constraint teamer foreign key (opponent_team) references team2425(id)')
